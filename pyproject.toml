@@ -9,9 +9,6 @@ description = "Simple statistical assumption checks for ANOVA, linear regression
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
-authors = [
-  { name = "OpenAI Codex" }
-]
 dependencies = [
   "numpy>=1.23",
   "pandas>=1.5",
@@ -27,4 +24,3 @@ dev = [
 
 [tool.setuptools.packages.find]
 include = ["assumpcheck*"]
-

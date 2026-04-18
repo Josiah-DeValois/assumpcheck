@@ -156,9 +156,10 @@ By default, independence is treated as a design question:
 - Logistic ROC / AUC is treated as a fit diagnostic, not a strict assumption.
 - Some diagnostics need access to original data or design metadata to be fully informative.
 
-## Example script
+## Examples
 
-See [examples/basic_usage.py](/Users/josiahdevalois/Documents/Coding Projects/assumpcheck/examples/basic_usage.py).
+- Script: `examples/basic_usage.py`
+- Notebook: `examples/assumpcheck_examples.ipynb`
 
 ## Tests
 
