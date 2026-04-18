@@ -158,8 +158,15 @@ By default, independence is treated as a design question:
 
 ## Examples
 
+- Walkthrough: `examples/workflow.md`
 - Script: `examples/basic_usage.py`
 - Notebook: `examples/assumpcheck_examples.ipynb`
+
+To rebuild the notebook, Markdown walkthrough, and example plot assets:
+
+```bash
+python examples/build_workflow_artifacts.py
+```
 
 ## Tests
 
