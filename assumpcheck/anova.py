@@ -22,6 +22,14 @@ def check_anova(
     return_dict: bool = False,
     design_independent: bool | None = None,
 ):
+    """Check core one-way ANOVA assumptions with concise terminal output.
+
+    Parameters can be supplied either as a fitted statsmodels model or as
+    raw `y` and `groups` vectors. By default the function prints a short
+    summary and returns an ``AssumptionReport``. Set ``return_dict=True``
+    for a serializable result payload.
+    """
+
     design_independent = bool_from_user_input(design_independent)
     fitted_model, values, group_values = _resolve_anova_inputs(model=model, y=y, groups=groups)
     residuals = fitted_model.resid

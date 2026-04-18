@@ -31,6 +31,13 @@ def check_logistic_regression(
     return_dict: bool = False,
     design_independent: bool | None = None,
 ):
+    """Check core logistic regression assumptions and fit diagnostics.
+
+    Supply either a fitted statsmodels logistic model or raw ``X`` and ``y``.
+    The function prints a concise summary by default and returns either an
+    ``AssumptionReport`` or a dictionary when ``return_dict=True``.
+    """
+
     design_independent = bool_from_user_input(design_independent)
     fitted_model, feature_frame, outcome, fit_error = _resolve_logistic_inputs(model=model, X=X, y=y)
 

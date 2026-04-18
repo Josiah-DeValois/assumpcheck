@@ -13,21 +13,19 @@ The package is designed to stay simple:
 - mitigation suggestions when something fails
 - optional structured output for programmatic use
 
-## Status
-
-This repository currently contains an MVP that is:
-
-- statsmodels-first
-- focused on clear terminal output
-- designed for local analysis workflows
-
 ## Installation
 
 ```bash
-pip install -e .
+pip install "git+https://github.com/Josiah-DeValois/assumpcheck.git"
 ```
 
-Core dependencies:
+Once the package is published on PyPI, the installation target will become:
+
+```bash
+pip install assumpcheck
+```
+
+The package currently depends on:
 
 - `numpy`
 - `pandas`
@@ -61,6 +59,45 @@ report = check_linear_regression(model=fitted_ols_model)
 
 ```python
 report = check_logistic_regression(model=fitted_logit_model)
+```
+
+## Quickstart
+
+```python
+import numpy as np
+import pandas as pd
+
+from assumpcheck import check_linear_regression
+
+rng = np.random.default_rng(27)
+X = pd.DataFrame(
+    {
+        "x1": rng.normal(size=35),
+        "x2": rng.normal(size=35),
+    }
+)
+y = 1.0 + 1.8 * X["x1"] - 0.6 * X["x2"] + rng.normal(scale=0.35, size=35)
+
+report = check_linear_regression(
+    X=X,
+    y=y,
+    design_independent=True,
+    plots_on_fail=False,
+)
+```
+
+Typical output looks like:
+
+```text
+LINEAR REGRESSION ASSUMPTION CHECKS
+[PASS] Linearity
+[PASS] Independence
+[PASS] Normality of residuals
+[PASS] Homoscedasticity
+[PASS] Multicollinearity
+[WARN] Extreme influential points
+
+Summary: 5 pass, 1 warn
 ```
 
 ## Example output
@@ -155,14 +192,14 @@ By default, independence is treated as a design question:
 - Thresholds are intentionally presented as heuristics.
 - Logistic ROC / AUC is treated as a fit diagnostic, not a strict assumption.
 - Some diagnostics need access to original data or design metadata to be fully informative.
+- The current influence heuristics are intentionally conservative, so clean linear or logistic examples may still emit a `WARN`.
 
 ## Examples
 
-- Walkthrough: `examples/workflow.md`
 - Script: `examples/basic_usage.py`
 - Notebook: `examples/assumpcheck_examples.ipynb`
 
-To rebuild the notebook, Markdown walkthrough, and example plot assets:
+To rebuild the executed notebook and example plot assets:
 
 ```bash
 python examples/build_workflow_artifacts.py
@@ -170,10 +207,13 @@ python examples/build_workflow_artifacts.py
 
 ## Tests
 
-Run the lightweight test suite with:
+Run the test suite with:
 
 ```bash
-python3 -m unittest discover -s tests
+python -m pytest -q
 ```
 
-If the scientific Python dependencies are installed, the end-to-end diagnostic tests will run as well.
+## Release Process
+
+For the first public release to TestPyPI and PyPI using GitHub Trusted Publishing,
+see `RELEASING.md`.

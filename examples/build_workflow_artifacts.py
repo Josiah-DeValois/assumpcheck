@@ -22,7 +22,6 @@ from assumpcheck import check_anova, check_linear_regression, check_logistic_reg
 EXAMPLES_DIR = Path(__file__).resolve().parent
 ASSETS_DIR = EXAMPLES_DIR / "assets"
 NOTEBOOK_PATH = EXAMPLES_DIR / "assumpcheck_examples.ipynb"
-WORKFLOW_PATH = EXAMPLES_DIR / "workflow.md"
 
 
 @dataclass
@@ -468,59 +467,6 @@ def run_logistic_full() -> dict:
     return result
 
 
-def generate_markdown(cases_by_section: dict[str, list[CapturedCase]]) -> str:
-    lines = [
-        "# assumpcheck workflow",
-        "",
-        "This guide shows a realistic first workflow for each public checker.",
-        "",
-        "The snippets below are deterministic and the console output was captured from the current package implementation.",
-        "",
-        "## Setup",
-        "",
-        "```python",
-        "import numpy as np",
-        "import pandas as pd",
-        "",
-        "from assumpcheck import (",
-        "    check_anova,",
-        "    check_linear_regression,",
-        "    check_logistic_regression,",
-        ")",
-        "```",
-        "",
-        "> Note",
-        ">",
-        "> The current MVP uses conservative influence heuristics. In the clean linear and logistic examples, the package still emits a mild `WARN` for influential points even though the rest of the diagnostics look reasonable.",
-        "",
-    ]
-
-    for section, captured_cases in cases_by_section.items():
-        lines.append(f"## {section}")
-        lines.append("")
-        for captured in captured_cases:
-            lines.append(f"### {captured.case.title}")
-            lines.append("")
-            lines.append(captured.case.description)
-            lines.append("")
-            lines.append("```python")
-            lines.extend(captured.case.code.splitlines())
-            lines.append("```")
-            lines.append("")
-            lines.append("Expected console output:")
-            lines.append("")
-            lines.append("```text")
-            lines.extend(captured.stdout.splitlines())
-            lines.append("```")
-            lines.append("")
-            for image_path in captured.image_paths:
-                relative = image_path.relative_to(EXAMPLES_DIR).as_posix()
-                alt = f"{section} {captured.case.title} plot"
-                lines.append(f"![{alt}]({relative})")
-                lines.append("")
-    return "\n".join(lines).rstrip() + "\n"
-
-
 def split_lines(text: str) -> list[str]:
     return [f"{line}\n" for line in text.splitlines()]
 
@@ -631,9 +577,7 @@ def main() -> None:
         for section, section_cases in cases.items()
     }
     NOTEBOOK_PATH.write_text(json.dumps(generate_notebook(captured), indent=1) + "\n")
-    WORKFLOW_PATH.write_text(generate_markdown(captured))
     print(f"Wrote {NOTEBOOK_PATH.relative_to(EXAMPLES_DIR.parent)}")
-    print(f"Wrote {WORKFLOW_PATH.relative_to(EXAMPLES_DIR.parent)}")
     print(f"Wrote assets to {ASSETS_DIR.relative_to(EXAMPLES_DIR.parent)}")
 
 
