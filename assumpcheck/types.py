@@ -9,6 +9,8 @@ Plotter = Callable[[], None]
 
 @dataclass
 class AssumptionCheck:
+    """Structured result for one diagnostic or assumption check."""
+
     assumption: str
     status: str
     metric: str | None = None
@@ -40,6 +42,8 @@ class AssumptionCheck:
 
 @dataclass
 class AssumptionReport:
+    """Collection of assumption checks and optional diagnostics for one model."""
+
     model_type: str
     checks: list[AssumptionCheck]
     diagnostics: list[AssumptionCheck] = field(default_factory=list)
@@ -67,4 +71,3 @@ class AssumptionReport:
             if show_all or (plots_on_fail and check.status in {"FAIL", "WARN"}):
                 plotters.append(check.plotter)
         return plotters
-

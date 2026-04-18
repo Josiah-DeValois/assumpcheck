@@ -30,6 +30,14 @@ def check_linear_regression(
     design_independent: bool | None = None,
     ordered: bool = False,
 ):
+    """Check ordinary linear regression assumptions with statsmodels-first support.
+
+    Supply either a fitted statsmodels OLS model or raw ``X`` and ``y``.
+    The function prints a pytest-style summary by default, optionally shows
+    diagnostic plots, and returns either an ``AssumptionReport`` or a
+    serializable dictionary when ``return_dict=True``.
+    """
+
     design_independent = bool_from_user_input(design_independent)
     fitted_model, design_frame, outcome = _resolve_linear_inputs(model=model, X=X, y=y)
     residuals = fitted_model.resid
