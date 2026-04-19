@@ -1,4 +1,6 @@
 .venv/
+prod-test/
+test-install/
 .pytest_cache/
 .ipynb_checkpoints/
 __pycache__/
