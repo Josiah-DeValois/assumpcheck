@@ -177,7 +177,7 @@ def roc_curve_points(y_true: Any, y_score: Any) -> dict[str, Any]:
         previous_score = score
     tpr.append(tps / positives)
     fpr.append(fps / negatives)
-    integrate = getattr(np, "trapezoid", np.trapz)
+    integrate = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
     auc = float(integrate(tpr, fpr))
     return {"fpr": np.asarray(fpr), "tpr": np.asarray(tpr), "auc": auc}
 
