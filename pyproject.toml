@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "assumpcheck"
-version = "0.1.0"
+version = "0.1.2"
 description = "Simple statistical assumption checks for ANOVA, linear regression, and logistic regression."
 readme = "README.md"
 requires-python = ">=3.9"

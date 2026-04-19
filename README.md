@@ -16,12 +16,6 @@ The package is designed to stay simple:
 ## Installation
 
 ```bash
-pip install "git+https://github.com/Josiah-DeValois/assumpcheck.git"
-```
-
-Once the package is published on PyPI, the installation target will become:
-
-```bash
 pip install assumpcheck
 ```
 
